@@ -1,0 +1,71 @@
+
+@media screen and (min-width: 260px) {
+body {
+  flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  justify-content: space-between;
+  width: 100%;
+ 
+}
+.main-title {
+  font-size: 4em;;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: rgb(45, 44, 44);
+  font-family: "Libre Baskerville", serif;
+}
+
+p,
+li,
+button {
+  font-family: "Karla", sans-serif;
+  
+}
+.cand_info {
+  color: rgb(61, 59, 59);
+}
+.apply_error {
+  color: red!important;
+}
+.hidden {
+  display: none;
+}
+.truc {
+  transform: translateX(-50%);
+}
+.main-title {
+  position: absolute; 
+  top: 15%; 
+  left: 20%;
+}
+
+.truc {
+  background-color: rgba(226, 226, 238, 0.921);
+  color: rgb(47, 43, 43);
+  justify-content: space-between;
+  align-items:baseline;
+}
+.current{
+  color: white;
+  padding: 0 5px;
+}
+.page {
+  padding: 0 3px;
+}
+
+}
+ @media screen and (min-width: 768px) {
+  
+    .main-title {
+      position: absolute; 
+      top: 30%; 
+      left: 15%;
+    }
+   
+  } 
