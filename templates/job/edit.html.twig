@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Job{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="mt-4">Créer l'annonce</h1>
+		{{ form_start(form) }}
+		<div class="form-group">
+			{{ form_label(form.title) }}
+			{{ form_widget(form.title) }}
+			<div class="form-error">
+				{{ form_errors(form.title) }}
+			</div>
+		</div>
+	   	<div class="form-group">
+			{{ form_label(form.company) }}
+			{{ form_widget(form.company) }}
+			<div class="form-error">
+				{{ form_errors(form.company) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.location) }}
+			{{ form_widget(form.location) }}
+			<div class="form-error">
+				{{ form_errors(form.location) }}
+			</div>
+		</div>
+			<div class="form-group">
+			{{ form_label(form.city) }}
+			{{ form_widget(form.city) }}
+			<div class="form-error">
+				{{ form_errors(form.city) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.description) }}
+			{{ form_widget(form.description) }}
+			<div class="form-error">
+				{{ form_errors(form.description) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.salary) }}
+			{{ form_widget(form.salary) }}
+			<div class="form-error">
+				{{ form_errors(form.salary) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.schedule) }}
+			{{ form_widget(form.schedule) }}
+			<div class="form-error">
+				{{ form_errors(form.schedule) }}
+			</div>
+		</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="form-group">
+			{{ form_label(form.isApproved) }}
+			{{ form_widget(form.isApproved) }}
+			<div class="form-error">
+				{{ form_errors(form.isApproved) }}
+			</div>
+			
+				<div class="form-group">
+				{{ form_label(form.author) }}
+				{{ form_widget(form.author) }}
+				<div class="form-error">
+					{{ form_errors(form.author) }}
+				</div>
+				{% endif %}
+				<div class="form-group mb-4">
+					{{ form_row(form.submit) }}
+				</div>
+				<button class="btn btn-dark"><a href="{{ path('job.annonces') }}"class="text-decoration-none text-white">Vers la liste des annonces</a></button>
+				<div class="form-group">
+					{{ form_row(form._token) }}
+				</div>
+				{{ form_end(form) }}
+			</div>
+		{% endblock %}

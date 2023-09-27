@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Offre d'emploi
+	{{ job.title }}
+{% endblock %}
+{% block body %}
+	<div class="container">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4" style="z-index: 3; padding: 15px;">
+				{{ message }}
+			</div>
+		{% endfor %}
+{% for message in app.flashes('danger') %}
+<div class="alert alert-danger mt-4">
+{{ message }}
+</div>
+{% endfor %}
+	<div class="d-flex justify-content-between mt-5 mb-4" style="padding-top: 4%;">
+	<h1 class=" text-capitalize">{{ job.title }}</h1>
+	{% if is_granted('ROLE_RECRUITER') %}
+<div>
+		
+			<a href="{{ path('job.annonces') }}" class="text-light mt-lg-3 fs-4 bg-primary p-2">Mes annonces</a>
+	
+		</div>
+	{% else %}
+<a href="{{ path('job.index') }}" class="text-light mt-lg-3 fs-4 bg-primary p-2" >Offres d'emploi</a>
+	{% endif %}
+		
+			
+		</div>
+		<h4 class="mt-3">Company:</h4>
+		<p class="fs-5  text-capitalize">{{ job.company|raw }}</p>
+		<h4 class="mt-3">Location:</h4>
+		<p class="fs-5">{{ job.location|raw }}</p>
+		<h4 class="mt-3">Description:</h4>
+		<p class="fs-5">{{ job.description|raw }}</p>
+		<h4 class="mt-3">Salaire
+			<span class="badge bg-primary mt-1">
+				{{ job.salary }}</span>
+		</h4>
+		<h4 class="mt-3 mb-3">Emploi de temps :
+			<p class="fs-5 mt-3">{{ job.schedule|raw }}</p>
+		</h4>
+		<h4 class="mt-3">Posté:</h4>
+		<p class="fs-4">{{ job.createdAt ? job.createdAt|date('d/m/Y') : '' }}</p>
+		<h4 class="mt-3 mb-3 hidden">Par :
+			<p class="fs-5 mt-3">{{ job.author }}
+				de
+				<strong>{{ job.company|raw }}</striong>
+			</p>
+		</h5>
+		{% if app.user and app.user.isVerified is same as true %}
+			{% include "partials/_apply.html.twig" %}
+		{% else %}
+			<p>Pour postuler veuillez-vous connecter</p>
+		{% endif %}
+		{% if is_granted('ROLE_RECRUITER') %}
+		<div>
+		{% if job.isApproved is same as false %}
+				<button class="btn btn-info fs-5 fw-bold mb-5">
+			<a href="{{ path('job.edit', {id: job.id}) }}" class="text-decoration-none text-light">Rédiger l'annonce</a>
+		</button>
+		{% endif %}
+		</div>
+		{% endif %}
+		<div>
+		<button class="btn btn-primary fs-6 fw-bold mb-5">
+			<a href="{{ path('job.index') }}" class="text-decoration-none text-light">Vers la liste d'offres d'emploi</a>
+		</button>
+		<br>
+	</div>
+</div></div></div>
+	<div class="text-center mb-4">
+		<button class="btn btn-info mb-4" type="button">
+			<a class="fs-5 text-light mb-4" href="#up" style="color: #d4c54c; text-decoration: none;">Ver le haut</a>
+			
+		</div><br>
+			<br></div>{% endblock %}

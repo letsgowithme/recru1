@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello JobController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/iryna/recru_site/src/Controller/JobController.php'|file_link(0) }}">src/Controller/JobController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/iryna/recru_site/templates/job/index.html.twig'|file_link(0) }}">templates/job/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block title %}
+	Offres d'emploi
 {% endblock %}
+{% block body %}
+	<div class="container mt-4 mb-4">
+		<div class="mt-4">{% include "partials/_bg_all_jobs_img.html.twig" %}"</div>
+		<h1 class="text-center text-light mb-4">Offres d'emploi</h1>
+		<div class="d-flex justify-content-center flex-wrap">
+			{% for job in pagination %}
+				{% if job.isApproved is same as true %}
+					<div class="card border-primary mb-3 me-3 offer_card" style="width: 60%;  background-color: rgba(226, 226, 238, 0.921);">
+						<div class="card-header">Offre numéro
+							{{ job.id }}
+						</div>
+						<div class="card-body">
+							<h4 class="card-title text-capitalize" style="color: blue;">
+								{{ job.title }}
+							</h4>
+							<h5 class="card-text text-capitalize">Companie:
+								{{ job.company|raw }}</h5>
+							<p class="card-text text-capitalize">
+								{% include "partials/location-dot-solid.svg.html.twig" %}
+								{{ job.city }}</p>
+							<div style="display: flex; justify-content: space-between;
+																	  align-items:baseline;" class="flex-sm-column flex-lg-row">
+								<h6 class="mt-3 ms-2 text-dark">Posté le:
+									{{ job.createdAt ? job.createdAt|date('Y-m-d') : '' }}</h6>
+								<a href="{{ path('job.show', {id: job.id}) }}" class="fs-6">Voir les détails</a>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="text-center fs-5" style="margin-left: 16%;">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+	</div>
+	<br>
+	<div class="text-center mb-4">
+		<button class="btn btn-info mb-4" type="button">
+			<a class="fs-4 text-light" href="#up" style="color: #d4c54c; text-decoration: none;">Ver le haut</a>
+		</div>
+	{% endblock %}

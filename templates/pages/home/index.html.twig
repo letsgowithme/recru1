@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Page d'Accueil
+{% endblock %}
+{% block body %}
+<div class="container">
+<div class="mt-4"> {% include "partials/_job_img.html.twig" %} </div>
+<h1 class="text-center mt-4 text-primary rounded p-4 fs-1 main-title" style="z-index: 2;  background-color: white;">Bienvenue sur le site de recrutement</h1>
+{% for message in app.flashes('success') %}
+<div class="alert alert-success mt-4">
+{{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('danger') %}
+<div class="alert alert-danger mt-4">
+{{ message }}
+</div>
+{% endfor %}
+<div class="d-flex justify-content-around center">
+</div>
+</div>
+{% endblock %}
