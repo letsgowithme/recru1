@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Users
+{% endblock %}
+{% block body %}
+	<div class="container mt-4 mb-4">
+		<div class="mt-4">{% include "partials/_bg_all_jobs_img.html.twig" %}"</div>
+		<h1 class="text-center text-light mb-4">Utilisateurs</h1>
+		<div class="d-flex justify-content-center flex-wrap">
+		
+		{% for user in users %}
+				{% if user.roles[0] is same as 'ROLE_CANDIDATE' %}
+				{# <h2>Les candidats</h2> #}
+					<div class="card border-primary mb-3 me-3 offer_card" style="width: 60%;  background-color: rgba(226, 226, 238, 0.921);">
+						<div class="card-header">User numéro
+							{{ user.id }} - {{ user.lastname }} - {{ user.firstname }} - 
+								{{ user.roles[0] }}
+							- {{ user.isVerified() ? "Verifié" : "pas verifié"}}
+						</div>
+					</div>
+					{% endif %}
+					{% if user.roles[0] is same as 'ROLE_RECRUITER' %}
+						{# <h2>Les recruteurs</h2> #}
+							<div class="card border-primary mb-3 me-3 offer_card" style="width: 60%;  background-color: rgba(226, 226, 238, 0.921);">
+								<div class="card-header">User numéro
+									{{ user.id }} - {{ user.lastname }} - {{ user.firstname }} - 
+										{{ user.roles[0] }}
+									- {{ user.isVerified() ? "Verifié" : "pas verifié"}}
+								</div>
+							</div>
+
+				{% endif %}
+
+				{% endfor %}
+			
+		</div>
+	
+	</div>
+	<br>
+	<div class="text-center mb-4">
+		<button class="btn btn-info mb-4" type="button">
+			<a class="fs-4 text-light" href="#up" style="color: #d4c54c; text-decoration: none;">Ver le haut</a>
+		</div>
+	{% endblock %}

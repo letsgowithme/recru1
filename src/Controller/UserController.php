@@ -26,6 +26,8 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            // 'candidats' => $userRepository->findByRole('Candidate'),
+            // 'recruteurs' => $userRepository->findByRole('Recruiter'),
         ]);
     }
     #[IsGranted('ROLE_ADMIN')]

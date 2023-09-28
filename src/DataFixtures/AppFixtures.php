@@ -61,7 +61,8 @@ class AppFixtures extends Fixture
                $users[] = $user;
            $manager->persist($user);
        }
- 
+       //Candidates
+   
          //Jobs
          $jobs = [];
          for ($i = 0; $i < 10; $i++) {
