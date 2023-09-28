@@ -59,10 +59,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Job::class)]
     private Collection $jobs;
 
-    #[ORM\OneToOne(targetEntity: Candidate::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Candidate::class, mappedBy: 'user', cascade: ['persist','remove'])]
     private ?Candidate $candidate = null;
 
-    #[ORM\OneToOne(targetEntity: Recruiter::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Recruiter::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Recruiter $recruiter = null;
 
     #[ORM\Column(length: 255, nullable: true)]
