@@ -8,7 +8,9 @@
 <ol>
 {% for apply in applies %}
 <li class="d-flex">
-{{ apply.candidate.firstname }} - {{ apply.candidate.lastname }} - {{ apply.job }} - {{ apply.cvFilename }}
+{{ apply.candidate.firstname }} - {{ apply.candidate.lastname }} - {{ apply.candidate.cvFilename }}
+<br>
+ - {{ apply.job.author }} 
 
 <fieldset class="form-group">
       <div class="form-check form-switch">

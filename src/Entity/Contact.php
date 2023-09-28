@@ -115,6 +115,10 @@ $this->createdAt = $createdAt;
 
 return $this;
 }
-
+public function __toString()
+{
+    return $this->lastname;
+    
+}
 }
 
