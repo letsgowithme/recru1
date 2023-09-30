@@ -14,6 +14,8 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 
 
 class ApplyController extends AbstractController
@@ -28,7 +30,7 @@ class ApplyController extends AbstractController
     {
               $applies = $applyRepository->findAll();
             //   $applies = $applyRepository->findBy(['isApproved' => true]);
-              $appliesAuthor = "";
+              // $appliesAuthor = "";
               
               $emailSender = "admin@exemple.com";
 
@@ -51,13 +53,12 @@ class ApplyController extends AbstractController
                 ->text(
                   "Bonjour, \n\n".
                   "Vous avez un nouveau candidat postulé pour votre annonce.\n\n".
-                  "Candidat: ".$applyCandidateFirstname." ".$applyCandidateLastname."\n\n"." Email: ".$applyCandidateEmail."\n\n".
-                  "Cv: ".$this->generateUrl('job.show', ['id' => $apply->getJob()->getCandidate()->getCvFilename()], UrlGeneratorInterface::ABSOLUTE_URL)."\n\n".
-                  "Vous pouvez consulter votre annonce en cliquant sur le lien suivant :\n\n".
-                  $this->generateUrl('job.show', ['id' => $apply->getJob()->getId()], UrlGeneratorInterface::ABSOLUTE_URL)."\n\n".
+                  "Candidat: ".$applyCandidateFirstname." ".$applyCandidateLastname."\n\n".
+                  "Cv: ".$applyCandidateCv."\n\n".
+                  
                   "Merci pour votre confiance.\n\n".
                   "Cordialement,\n\n".
-                  "RecruSitecom"
+                  "RecruSite.com"
                 );
 
                 $mailer->send($email);
@@ -67,7 +68,7 @@ class ApplyController extends AbstractController
         return $this->render('apply/index.html.twig', [
             'applies' => $applies,
             // 'allApplies' => $allApplies,
-            'appliesAuthor' => $appliesAuthor
+            // 'appliesAuthor' => $appliesAuthor
         ]);          
         
         }
