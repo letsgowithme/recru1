@@ -20,6 +20,11 @@
 							<a class="nav-link fs-5 fw-bold" href="{{ path('job.annonces') }}">Mes annonces</a>
 						</li>
 					{% endif %}
+					{% if is_granted('ROLE_CONSULTANT') %}
+						<li class="nav-item">
+							<a class="nav-link fs-5 fw-bold" href="{{ path('apply.index') }}">Postulé</a>
+						</li>
+					{% endif %}
 
 				{% endif %}
 			</ul>

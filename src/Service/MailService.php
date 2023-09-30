@@ -25,12 +25,12 @@ class MailService
         string $to = 'admin@exemple.com'
     ): void {
         $email = (new TemplatedEmail())
-        ->from('recru_no_reply@recru.com')
-        ->to('admin@exemple.com')
-        ->subject('Info de candidat')
-        ->htmlTemplate('<p>C\'est une information</p>');
+            ->from($from)
+            ->to($to)
+            ->subject($subject)
+            ->htmlTemplate($htmlTemplate)
+            ->context($context);
 
         $this->mailer->send($email);
     }
 }
-

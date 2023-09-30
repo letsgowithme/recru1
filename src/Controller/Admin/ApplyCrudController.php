@@ -40,7 +40,7 @@ class ApplyCrudController extends AbstractCrudController
             //     ->setLabel('Notification'), 
             BooleanField::new('isApproved')
                 ->setLabel('Approuvé ?')
-
+                ->hideOnIndex()
         ];
     }
     

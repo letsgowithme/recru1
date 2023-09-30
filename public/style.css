@@ -58,6 +58,9 @@ button {
 .page {
   padding: 0 3px;
 }
+.email_confirm_message {
+  
+}
 
 }
  @media screen and (min-width: 768px) {

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Candidate;
 use App\Entity\Comment;
 use App\Entity\Company;
+use App\Entity\Contact;
 use App\Entity\Job;
 use App\Entity\Recruiter;
 use App\Entity\User;
@@ -40,16 +41,16 @@ class AppFixtures extends Fixture
         //        $users[] = $super_admin;
         //    $manager->persist($super_admin);
            
-        //    $admin = new User();
-        //    $admin->setLastname('Consultant')
-        //           ->setEmail('consult@recru.fr')
-        //           ->setRoles(['ROLE_ADMIN'])
-        //           ->setPlainPassword('password');
+           $admin = new User();
+           $admin->setLastname('Consultant')
+                  ->setEmail('admin@admin.fr')
+                  ->setRoles(['ROLE_ADMIN'])
+                  ->setPlainPassword('password');
                
-        //           $users[] = $admin;
-        //       $manager->persist($admin);
+                  $users[] = $admin;
+              $manager->persist($admin);
 
-
+                    
         for ($j = 0; $j < 10; $j++) {
            $user = new User();
            $user->setLastname($this->faker->lastname())
@@ -85,7 +86,17 @@ class AppFixtures extends Fixture
              $jobs[] = $job;
              $manager->persist($job);
          }    
- 
+         // Contact
+        for ($i = 0; $i < 5; $i++) {
+            $contact = new Contact();
+            $contact->setLastname($this->faker->name())
+                ->setEmail($this->faker->email())
+                ->setSubject('Demande n°' . ($i + 1))
+                ->setMessage($this->faker->text());
+
+            $manager->persist($contact);
+
+        }
 
         $manager->flush();
     }

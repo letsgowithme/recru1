@@ -152,22 +152,6 @@ class JobController extends AbstractController
               $manager->persist($apply);
               $manager->flush();
 
-              //send email to recruiter
-    //    $applies = $applyRepository->findBy(['isApproved' => true]);
-    //    $appliesAuthor =  $apply->getJob()->getAuthor();
-    //    $emailRecru = $appliesAuthor->getEmail();
-
-    //           if($applies) {
-    //             $notification = (new Notification('Nouveau cnadidat', ['email']))
-    //             ->content('Vous avez un canddat postulé pour votre annonce');
-    //              // The receiver of the Notification
-    //         $recipient = new Recipient(
-    //             $emailRecru
-                
-    //         );
-    //         // Send the notification to the recipient
-    //         $notifier->send($notification, $recipient);
-    //         }
 
               $this->addFlash(
                   'success',

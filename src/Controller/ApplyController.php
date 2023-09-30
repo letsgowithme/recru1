@@ -8,22 +8,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ApplyRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class ApplyController extends AbstractController
 {
-    #[Route('/apply', name: 'app_apply', methods: ['GET'])]
+    #[Route('/apply', name: 'apply.index', methods: ['GET'])]
+    #[IsGranted('ROLE_RECRUITER')]
     public function index(ApplyRepository $applyRepository,
     Request $request,
     EntityManagerInterface $manager,
     MailerInterface $mailer
     ): Response
     {
-              $allApplies = $applyRepository->findAll();
-              $applies = $applyRepository->findBy(['isApproved' => true]);
+              $applies = $applyRepository->findAll();
+            //   $applies = $applyRepository->findBy(['isApproved' => true]);
               $appliesAuthor = "";
               
               $emailSender = "admin@exemple.com";
@@ -31,47 +35,42 @@ class ApplyController extends AbstractController
             //   if($this->getParameter('isApproved' == true)){
             //   if($applies){
                  foreach ($applies as $apply) {
+                   $emailRecru = 'admin@exemple.com';
                    $emailRecru = $apply->getJob()->getAuthor()->getEmail();
-                //    $applyCandidate = $apply->getJob()->getCandidate();
-                //    $emailRecru = $apply->getJob()->getRecruiter()->getEmail();
-                 //Email
-                $email = (new Email())
-                ->from($emailSender)
-                ->to($emailRecru)
-                ->subject('Votre demande d\'emploi a bien été prise en compte')
-                // ->htmlTemplate('emails/email.html.twig')
-                ;
-                // ->context([
-                //     'name' => $apply->getJob()->getTitle(),
-                //     'email' => $apply->getJob()->getAuthor()->getEmail(),
-                // ])
-                
-                $mailer->send($email)
-                // $email->sendEmail(
-                //     $from,
-                //     $apply->getJob()->getAuthor()->getEmail(),
-                //     'emails/apply.html.twig',
-                //     ['apply' => $apply]
-        ;
 
-        
-         $this->addFlash(
-            'success',
-            'Votre message a été envoyé avec succès !'
-        );
-                 }
-            //   }
-            
-            
-    
-            return $this->render('apply/index.html.twig', [
-                'applies' => $applies,
-                'allApplies' => $allApplies,
-            ]);
-          
+                   $applyCandidateLastname = $apply->getCandidate()->getLastname();
+                   $applyCandidateFirstname = $apply->getCandidate()->getFirstname();
+                   $applyCandidateEmail = $apply->getCandidate()->getEmail();
+                   $applyCandidateCv = $apply->getCandidate()->getCvFilename();
+                 //Email
+                 if($apply->getIsApproved() == true){
+                $email = (new Email())
+                ->from('admin@exemple.com')
+                ->to($emailRecru)
+                ->subject('Vous avez un nouveau candidat postulé pour votre annonce')
+                ->text(
+                  "Bonjour, \n\n".
+                  "Vous avez un nouveau candidat postulé pour votre annonce.\n\n".
+                  "Candidat: ".$applyCandidateFirstname." ".$applyCandidateLastname."\n\n"." Email: ".$applyCandidateEmail."\n\n".
+                  "Cv: ".$this->generateUrl('job.show', ['id' => $apply->getJob()->getCandidate()->getCvFilename()], UrlGeneratorInterface::ABSOLUTE_URL)."\n\n".
+                  "Vous pouvez consulter votre annonce en cliquant sur le lien suivant :\n\n".
+                  $this->generateUrl('job.show', ['id' => $apply->getJob()->getId()], UrlGeneratorInterface::ABSOLUTE_URL)."\n\n".
+                  "Merci pour votre confiance.\n\n".
+                  "Cordialement,\n\n".
+                  "RecruSitecom"
+                );
+
+                $mailer->send($email);
+              }
+                }
+               
+        return $this->render('apply/index.html.twig', [
+            'applies' => $applies,
+            // 'allApplies' => $allApplies,
+            'appliesAuthor' => $appliesAuthor
+        ]);          
         
         }
-
   
     }
     
