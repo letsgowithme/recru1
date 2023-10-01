@@ -42,7 +42,19 @@ button {
 .main-title {
   position: absolute; 
   top: 15%; 
-  left: 20%;
+  right: 50%;
+  transform: translateX(-50%);
+
+ 
+}
+/* .username_link {
+  position: relative;
+} */
+.email_confirm_message {
+  position: absolute; 
+  top: 5%; 
+  left: 15%;
+  
 }
 
 .truc {
@@ -57,9 +69,6 @@ button {
 }
 .page {
   padding: 0 3px;
-}
-.email_confirm_message {
-  
 }
 
 }

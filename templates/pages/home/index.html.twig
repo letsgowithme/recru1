@@ -5,12 +5,14 @@
 {% block body %}
 <div class="container">
 {% for message in app.flashes('success') %}
-<div class="alert alert-success mt-2 fs-4 email_confirm_message">
-{{ message }}
+<div class="alert alert-success text-center mt-2 fs-4 email_confirm_message">
+{{ message }}   
 </div>
 {% endfor %}
 <div class="mt-4"> {% include "partials/_job_img.html.twig" %} </div>
-<h1 class="text-center mt-4 text-primary rounded p-4 fs-1 main-title" style="z-index: 2;  background-color: white;">Bienvenue sur le site de recrutement</h1>
+
+<h1 
+class="text-center mt-4 text-primary rounded p-2 fs-1" style="z-index: 2;  background-color: white;" id="home">Bienvenue sur le site de recrutement</h1>
 
 <button type="button" class="btn btn-primary"><a href="/contact/"></button>
 {% for message in app.flashes('danger') %}

@@ -55,6 +55,7 @@
 		{% else %}
 			<p>Pour postuler veuillez-vous connecter</p>
 		{% endif %}
+
 		{% if is_granted('ROLE_RECRUITER') %}
 		<div>
 		{% if job.isApproved is same as false %}
@@ -72,8 +73,9 @@
 	</div>
 </div></div></div>
 	<div class="text-center mb-4">
-		<button class="btn btn-info mb-4" type="button">
-			<a class="fs-5 text-light mb-4" href="#up" style="color: #d4c54c; text-decoration: none;">Ver le haut</a>
-			
-		</div><br>
+		<button class="btn me-4"><a href="#up"class="text-decoration-none text-white p-3 fw-bold fs-5 rounded" style="background: #18bc9c!important;">Vers le haut</a></button>
+				<button class="btn"><a href="/"class="text-decoration-none text-white p-3 fw-bold fs-5 rounded" style="background: #18bc9c!important;">Accueil</a></button>
+		
+		</div>
+		<br>
 			<br></div>{% endblock %}

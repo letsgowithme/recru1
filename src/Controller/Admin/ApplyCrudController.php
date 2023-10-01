@@ -20,13 +20,14 @@ class ApplyCrudController extends AbstractCrudController
     {
     return $crud
                 ->setSearchFields(['lastname'])
-                ->setPageTitle("index", "Postulé")
-                
+                ->setPageTitle(pageName: Crud::PAGE_INDEX, title: 'Postulé')
+               
+                ->setPageTitle(pageName: Crud::PAGE_EDIT, title: 'Modifier la demande');
                
     ;
     }
     
-    
+  
     public function configureFields(string $pageName): iterable
     {
         return [

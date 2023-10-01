@@ -42,9 +42,10 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         yield MenuItem::linkToRoute('Voir le site', 'fas fa-list', 'home');
-        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Annonces', 'fas fa-seedling', Job::class);
-        yield MenuItem::linkToCrud('Postulés', 'fas fa-seedling', Apply::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class)->setPermission('ROLE_CONSULTANT');
+        yield MenuItem::linkToCrud('Annonces', 'fas fa-seedling', Job::class)->setPermission('ROLE_CONSULTANT');
+        yield MenuItem::linkToCrud('Postulés', 'fas fa-seedling', Apply::class)->setPermission('ROLE_CONSULTANT');
+    
       
     }
    

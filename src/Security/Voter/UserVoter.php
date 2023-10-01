@@ -76,7 +76,7 @@ class UserVoter extends Voter
 						break;			
 	 }
 	}
-	
+	  
 
 	private function canEdit(){
 		return $this->security->isGranted('ROLE_ADMIN');

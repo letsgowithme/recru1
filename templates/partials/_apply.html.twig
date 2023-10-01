@@ -1,7 +1,7 @@
 <div class="mt-4">
 	<div class="apply">
-		{% if app.user %}
-			{% if is_granted('ROLE_CANDIDATE') %}
+		{% if app.user and app.user.isVerified is same as true %}
+			{% if is_granted('ROLE_CANDIDATE')  %}
 				<div class="apply__new">
 					<div class="w-full-width">
 						{{ form_start(formApply) }}

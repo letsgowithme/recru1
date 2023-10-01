@@ -20,11 +20,6 @@
 							<a class="nav-link fs-5 fw-bold" href="{{ path('job.annonces') }}">Mes annonces</a>
 						</li>
 					{% endif %}
-					{% if is_granted('ROLE_CONSULTANT') %}
-						<li class="nav-item">
-							<a class="nav-link fs-5 fw-bold" href="{{ path('apply.index') }}">Postulé</a>
-						</li>
-					{% endif %}
 
 				{% endif %}
 			</ul>
@@ -43,10 +38,15 @@
 	<div class="d-flex">
 		<ul class="navbar-nav me-auto">
 			{% if app.user %}
-				<li class="nav-item dropdown" style="margin-right: 5rem;">
-					<a class="nav-link dropdown-toggle fs-5 fw-bold ms-sm-5 ms-lg-1" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="color: white;">
-						{{ app.user.firstname ? app.user.firstname : app.user.email}}
-						{{ app.user.lastname ? app.user.lastname : null}}</a>
+				<li class="nav-item dropdown" 
+				style="margin-left: 5rem; margin-right: 2rem;"
+				
+				>
+					<a class="nav-link dropdown-toggle fs-5 fw-bold username_link" 
+					data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" 
+					aria-expanded="false" style="color: white;">
+						{{ app.user.firstname ? app.user.firstname : null}}
+						{{ app.user.lastname ? app.user.lastname : app.user.email }}</a>
 					<div class="dropdown-menu" style="margin-left: 5%;">
 						{% if 'ROLE_ADMIN' in app.user.roles %}
 							<a class="dropdown-item fw-bold" href="/admin">Tableau de bord</a>
