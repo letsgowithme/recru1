@@ -5,10 +5,11 @@
 {% block body %}
 <div class="container">
 {% for message in app.flashes('success') %}
-<div class="alert alert-success text-center mt-2 fs-4 email_confirm_message">
+<div class="alert alert-success text-center fs-4 email_confirm_message">
 {{ message }}   
 </div>
 {% endfor %}
+
 <div class="mt-4"> {% include "partials/_job_img.html.twig" %} </div>
 
 <h1 

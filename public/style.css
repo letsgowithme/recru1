@@ -36,6 +36,9 @@ button {
 .hidden {
   display: none;
 }
+.bold {
+  font-weight: bold !important;
+}
 .truc {
   transform: translateX(-50%);
 }
@@ -47,13 +50,13 @@ button {
 
  
 }
-/* .username_link {
-  position: relative;
-} */
+.card {
+  width: 90%!important;
+}
 .email_confirm_message {
-  position: absolute; 
-  top: 5%; 
-  left: 15%;
+  position: absolute!important; 
+  top: 25%!important;  
+  left: 5%;
  
   
 }
@@ -101,6 +104,7 @@ button {
       align-items: center;
       margin: auto;
      height: 4em; 
+     
    
     }
     .footer_link1 {
@@ -110,6 +114,15 @@ button {
     .footer_link2 {
       position: relative;
       left: -1em;
+    }
+    .email_confirm_message {
+      position: absolute!important; 
+      top: 25%!important;  
+      left: 25%;
+     
+    }
+    .card {
+      width: 70%!important;
     }
    
   } 
@@ -133,11 +146,17 @@ button {
       position: relative;
       left: -3em;
     }
+    .card {
+      width: 60%!important;
+    }
   }
   @media screen and (min-width: 1400px) {
     .footer_link3 {
       position: relative;
       left: -5em;
     }
-    
+    .email_confirm_message {
+      position: absolute!important;
+      margin-top: 10%;
+    }
   }
