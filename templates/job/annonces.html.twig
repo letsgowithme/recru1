@@ -15,19 +15,19 @@
 			<h2 class="text-center mt-1 mb-2">Votre demande d'inscription est en cours d'approuvement. Veuillez-vous connecter ultérieurement.</h2>
 		{% else %}
 
-		
+		<button class="btn text-light bg-primary mb-4" 
+			{# style="border-radius: 15px; padding: 10px 2px; width: auto; position: absolute; top: 15%; left: 85%; transform: translateX(-50%); padding: 10px;" #}
+			>
+				<a href="{{ path('job.new') }}" class="text-decoration-none text-white fs-4"
+				>Créer une annonce</a>
+			</button>
 		<div class="d-flex flex-wrap justify-content-between">
 			<h1 class="text-center mb-4 page_title page_title_annonces px-4 bg-light" 
 			style="color: #022a67;"
 			{# style="border-radius: 15px; padding: 10px 2px; width: auto; position: absolute; top: 12%; left: 50%; transform: translateX(-50%); padding: 10px;"  #}
 			>Mes annonces publiées
 			</h1>
-			<button class="btn text-light bg-primary mb-4" 
-			{# style="border-radius: 15px; padding: 10px 2px; width: auto; position: absolute; top: 15%; left: 85%; transform: translateX(-50%); padding: 10px;" #}
-			>
-				<a href="{{ path('job.new') }}" class="text-decoration-none text-white"
-				>Créer une annonce</a>
-			</button>
+			
 			</div>
 		{% endif %}
 

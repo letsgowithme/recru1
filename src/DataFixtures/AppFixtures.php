@@ -45,7 +45,9 @@ class AppFixtures extends Fixture
            $admin->setLastname('Consultant')
                   ->setEmail('admin@admin.fr')
                   ->setRoles(['ROLE_ADMIN'])
-                  ->setPlainPassword('password');
+                  ->setPlainPassword('password')
+                  ->setIsVerified(true)
+                  ;
                
                   $users[] = $admin;
               $manager->persist($admin);
@@ -62,8 +64,7 @@ class AppFixtures extends Fixture
                $users[] = $user;
            $manager->persist($user);
        }
-       //Candidates
-   
+    
          //Jobs
          $jobs = [];
          for ($i = 0; $i < 10; $i++) {
@@ -86,17 +87,7 @@ class AppFixtures extends Fixture
              $jobs[] = $job;
              $manager->persist($job);
          }    
-         // Contact
-        for ($i = 0; $i < 5; $i++) {
-            $contact = new Contact();
-            $contact->setLastname($this->faker->name())
-                ->setEmail($this->faker->email())
-                ->setSubject('Demande n°' . ($i + 1))
-                ->setMessage($this->faker->text());
-
-            $manager->persist($contact);
-
-        }
+     
 
         $manager->flush();
     }
