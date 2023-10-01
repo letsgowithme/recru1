@@ -54,6 +54,7 @@ button {
   position: absolute; 
   top: 5%; 
   left: 15%;
+ 
   
 }
 
@@ -70,6 +71,20 @@ button {
 .page {
   padding: 0 3px;
 }
+.footer_line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+ width: 100%; 
+ height: auto; 
+ position: fixed; 
+ bottom: 0;
+ background: rgb(52, 52, 66);
+}
+.footer_link {
+  padding: 10px;
+}
 
 }
  @media screen and (min-width: 768px) {
@@ -79,5 +94,43 @@ button {
       top: 30%; 
       left: 15%;
     }
+    .footer_line {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: auto;
+     height: 4em; 
+   
+    }
+    .footer_link1 {
+      position: relative;
+      left: -1em;
+    }
+    .footer_link2 {
+      position: relative;
+      left: -1em;
+    }
    
   } 
+
+  @media screen and (min-width: 1024px) {
+    .footer_line {
+      justify-content: space-between;
+      align-items: center;
+     height: 4em; 
+   
+    }
+    .footer_link1 {
+      position: relative;
+      left: -8em;
+    }
+    .footer_link2 {
+      position: relative;
+      left: -4.5em;
+    }
+    .footer_link3 {
+      position: relative;
+      left: -3em;
+    }
+  }
