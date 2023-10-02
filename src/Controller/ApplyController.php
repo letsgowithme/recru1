@@ -30,7 +30,7 @@ class ApplyController extends AbstractController
     {
               $applies = $applyRepository->findAll();
             //   $applies = $applyRepository->findBy(['isApproved' => true]);
-              // $appliesAuthor = "";
+              $appliesAuthor = "";
               
               $emailSender = "admin@exemple.com";
 
@@ -68,7 +68,7 @@ class ApplyController extends AbstractController
         return $this->render('apply/index.html.twig', [
             'applies' => $applies,
             // 'allApplies' => $allApplies,
-            // 'appliesAuthor' => $appliesAuthor
+             'appliesAuthor' => $appliesAuthor
         ]);          
         
         }

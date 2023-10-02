@@ -102,19 +102,22 @@ button {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      margin: auto;
+      /* margin-left: auto; */
      height: 4em; 
      
-   
     }
-    .footer_link1 {
+    .footer_link {
+      padding: 20px;
+    }
+    
+    /* .footer_link1 {
       position: relative;
       left: -1em;
     }
     .footer_link2 {
       position: relative;
       left: -1em;
-    }
+    } */
     .email_confirm_message {
       position: absolute!important; 
       top: 25%!important;  
@@ -133,28 +136,27 @@ button {
       align-items: center;
      height: 4em; 
    
+  
     }
-    .footer_link1 {
-      position: relative;
-      left: -14em;
-    }
+  
+     /*
     .footer_link2 {
       position: relative;
-      left: -10em;
+      left: 4em;
     }
     .footer_link3 {
       position: relative;
       left: -3em;
-    }
+    } */
     .card {
       width: 60%!important;
     }
   }
   @media screen and (min-width: 1400px) {
-    .footer_link3 {
+    /* .footer_link3 {
       position: relative;
-      left: -5em;
-    }
+      left: -2em;
+    } */
     .email_confirm_message {
       position: absolute!important;
       margin-top: 10%;
