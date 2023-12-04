@@ -1,5 +1,5 @@
 
-@media screen and (min-width: 260px) {
+@media screen and (min-width: 375px) {
 body {
   flex-direction: column;
   display: flex;
@@ -99,11 +99,11 @@ button {
     }
     .footer_line {
       display: flex;
-      flex-direction: row;
+      flex-direction: row!important;
       justify-content: space-between;
-      align-items: center;
+      /* align-items: center; */
       /* margin-left: auto; */
-     height: 4em; 
+     height: 3em; 
      
     }
     .footer_link {
@@ -126,7 +126,7 @@ button {
     .footer_line {
       justify-content: space-between;
       align-items: center;
-     height: 4em; 
+     height: 2.2em; 
     }
   
     .card {
