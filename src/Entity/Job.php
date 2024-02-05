@@ -7,10 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-
-// #[UniqueEntity(fields: ['id'], message: 'Cet id était déjà utilisé')]
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 class Job
 {
@@ -19,16 +16,16 @@ class Job
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $company = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $location = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $city = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -43,9 +40,6 @@ class Job
     #[ORM\Column]
     private ?bool $isApproved = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class)]
-    private Collection $candidates;
-
     #[ORM\ManyToOne(inversedBy: 'jobs')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?User $author = null;
@@ -53,19 +47,12 @@ class Job
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-
-
     #[ORM\OneToMany(mappedBy: 'job', targetEntity: Apply::class)]
     private Collection $applies;
 
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        $this->candidates = new ArrayCollection();
         $this->applies = new ArrayCollection();
     }
 
@@ -158,7 +145,6 @@ class Job
         return $this;
     }
 
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -178,43 +164,7 @@ class Job
         return $this->title;
     }
 
-   /**
-     * @return Collection<int, User>
-     */
-    public function getCandidates(): Collection
-    {
-        return $this->candidates;
-    }
 
-    public function addCandidate(User $candidate): self
-    {
-        if (!$this->candidates->contains($candidate)) {
-            $this->candidates->add($candidate);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Get the value of author
-     */ 
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set the value of author
-     *
-     * @return  self
-     */ 
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 
      /**
      * @return Collection<int, Apply>
@@ -265,6 +215,26 @@ class Job
     public function setCity($city)
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of author
+     */ 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set the value of author
+     *
+     * @return  self
+     */ 
+    public function setAuthor($author)
+    {
+        $this->author = $author;
 
         return $this;
     }

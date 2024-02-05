@@ -10,16 +10,11 @@ use App\Repository\ApplyRepository;
 use App\Repository\JobRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-// use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
-use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -27,15 +22,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class JobController extends AbstractController
 {
     /**
-     * Show all the recipes for everybody
+     * Show all the posts of job for everybody
      * @param JobRepository $jobRepository
      * @return Response
      */
     #[Route('/', name: 'job.index', methods: ['GET'])]
     public function all(JobRepository $jobRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        // $jobs = $jobRepository->findAll();
-
         $pagination = $paginator->paginate(
             $jobRepository->paginationQuery(),
             $request->query->get('page', 1),
@@ -47,6 +40,7 @@ class JobController extends AbstractController
            'pagination' => $pagination
         ]);
     }
+    
      /**
      * Show the jobs if user is connected
      * @param JobRepository $jobRepository
@@ -79,14 +73,14 @@ class JobController extends AbstractController
     UserInterface $user,): Response
     {
         $job = new Job();
-        if($user) {
-            $user = $job->getAuthor();
-         if(($this->getUser()->getCompany())) {
-            $job->setCompany($this->getUser()->getCompany());
-         } 
+        // if($user) {
+        //     $user = $job->getAuthor();
+        //  if($this->getUser()) {
+        //     $job->setAuthor($this->getUser());
+        //  } 
           
         
-        }
+        // }
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
@@ -123,19 +117,12 @@ class JobController extends AbstractController
           Job $job,
           Request $request,
           EntityManagerInterface $manager,
-          NotifierInterface $notifier,
-          ApplyRepository $applyRepository
       ): Response {
 
         $apply = new Apply();
         $apply->setJob($job);       
           if ($this->getUser()) {
-              $apply->setCandidate($this->getUser())
-        //             //  ->setCandidate($this->getUser()->getLasttname())
-        //             //  ->setCandidate($this->getUser()->getEmail())
-        //             //  ->setCandidate($this->getUser()->getCvFilename())
-
-          ;
+              $apply->setCandidate($this->getUser());
         }
        
         $formApply = $this->createForm(ApplyType::class, $apply); 
@@ -146,13 +133,10 @@ class JobController extends AbstractController
   
           if ($formApply->isSubmitted() && $formApply->isValid()) {
                  $apply->setCandidate($this->getUser())
-                       ->setJob($job)
-            ;
+                       ->setJob($job);
             
               $manager->persist($apply);
               $manager->flush();
-
-
               $this->addFlash(
                   'success',
                   'Vous avez postulé pour cette annonce'
@@ -163,7 +147,6 @@ class JobController extends AbstractController
               'job' => $job,
               'formApply' => $formApply->createView(),
               'error' => $error
-  
           ]);
       }
 

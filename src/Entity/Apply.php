@@ -35,7 +35,7 @@ class Apply
   
     #[ORM\ManyToOne(inversedBy: 'applies')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    private ?User $candidate = null;
+    private ?Candidate $candidate = null;
 
     #[ORM\ManyToOne(inversedBy: 'applies')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -44,7 +44,6 @@ class Apply
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
-        // $this->notifications = new ArrayCollection();
        
     }
 
@@ -117,36 +116,6 @@ class Apply
         return $this;
     }
 
-
-
-    /**
-     * Get the value of candidate
-     */
-    public function getCandidate()
-    {
-        return $this->candidate;
-    }
-
-    /**
-     * Set the value of candidate
-     *
-     * @return  self
-     */
-    public function setCandidate($candidate)
-    {
-        // if ($candidate === null && $this->candidate !== null) {
-        //     $this->candidate->setJobs(null);
-        // }
-
-        // set the owning side of the relation if necessary
-        // if ($candidate !== null && $candidate->getJobs() !== $this) {
-        //     $candidate->setJobs($this);
-        // }
-        $this->candidate = $candidate;
-
-        return $this;
-    }
-
     public function getJob(): ?Job
     {
         return $this->job;
@@ -159,4 +128,23 @@ class Apply
         return $this;
     }
 
+    /**
+     * Get the value of candidate
+     */ 
+    public function getCandidate()
+    {
+        return $this->candidate;
+    }
+
+    /**
+     * Set the value of candidate
+     *
+     * @return  self
+     */ 
+    public function setCandidate($candidate)
+    {
+        $this->candidate = $candidate;
+
+        return $this;
+    }
 }

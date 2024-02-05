@@ -18,15 +18,13 @@ class Candidate
     #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-
-    #[ORM\ManyToMany(targetEntity: Job::class)]
-    private Collection $jobs;
-
  
+    #[ORM\OneToMany(mappedBy: 'candidate', targetEntity: Apply::class)]
+    private Collection $applies;
 
     public function __construct()
     {
-        $this->jobs = new ArrayCollection();
+        $this->applies = new ArrayCollection();
        
     }
 
@@ -47,36 +45,36 @@ class Candidate
         return $this;
     }
 
-     /**
-     * @return Collection<int, Job>
+      /**
+     * @return Collection<int, Apply>
      */
-    public function getJobs(): Collection
+    public function getApplies(): Collection
     {
-        return $this->jobs;
+        return $this->applies;
     }
 
-    public function addJob(Job $job): self
+    public function addApply(Apply $apply): self
     {
-        if (!$this->jobs->contains($job)) {
-            $this->jobs->add($job);
-            $job->addCandidate($this);
+        if (!$this->applies->contains($apply)) {
+            $this->applies->add($apply);
+            $apply->setCandidate($this);
         }
 
         return $this;
     }
 
-    public function removeJob(Job $job): self
+    public function removeApply(Apply $apply): self
     {
-        if ($this->jobs->removeElement($job)) {
+        if ($this->applies->removeElement($apply)) {
             // set the owning side to null (unless already changed)
-            if ($job->getCandidates() === $this) {
-                $job->addCandidate(null);
+            if ($apply->getJob() === $this) {
+                $apply->setJob(null);
             }
         }
 
         return $this;
     }
-  
+    
     // public function __toString()
     // {
     //     return $this->lastname;

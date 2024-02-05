@@ -3,18 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cette email')]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
 #[Vich\Uploadable]
 
@@ -32,10 +29,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -50,14 +47,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    // #[Assert\NotBlank()]
     private ?string $password = 'password';
 
     #[ORM\Column]
     private ?bool $isVerified = false;
 
-    #[ORM\ManyToMany(targetEntity: Job::class)]
-    private Collection $jobs;
+   
 
     #[ORM\OneToOne(targetEntity: Candidate::class, mappedBy: 'user', cascade: ['persist','remove'])]
     private ?Candidate $candidate = null;
@@ -65,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(targetEntity: Recruiter::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Recruiter $recruiter = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $company = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -74,18 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $resetToken = null;
     
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
-    private Collection $applies;
-
-    public function __construct()
-    {
-        $this->jobs = new ArrayCollection();
-        $this->applies = new ArrayCollection();
-        // $this->updatedAt = new \DateTimeImmutable();
-       
-    }
-
-    public function getId(): ?int
+       public function getId(): ?int
     {
         return $this->id;
     }
@@ -229,28 +213,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
-
-    /**
-     * Get the value of jobs
-     */
-    public function getJobs()
-    {
-        return $this->jobs;
-    }
-
-    /**
-     * Set the value of jobs
-     *
-     * @return  self
-     */
-    public function setJobs($jobs)
-    {
-        $this->jobs = $jobs;
-
-        return $this;
-    }
    
     public function getCandidate(): ?Candidate
     {
@@ -319,35 +281,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Apply>
-     */
-    public function getApplies(): Collection
-    {
-        return $this->applies;
-    }
+    // /**
+    //  * @return Collection<int, Apply>
+    //  */
+    // public function getApplies(): Collection
+    // {
+    //     return $this->applies;
+    // }
 
-    public function addApply(Apply $apply): self
-    {
-        if (!$this->applies->contains($apply)) {
-            $this->applies->add($apply);
-            $apply->setCandidate($this);
-        }
+    // public function addApply(Apply $apply): self
+    // {
+    //     if (!$this->applies->contains($apply)) {
+    //         $this->applies->add($apply);
+    //         $apply->setCandidate($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeApply(Apply $apply): self
-    {
-        if ($this->applies->removeElement($apply)) {
-            // set the owning side to null (unless already changed)
-            if ($apply->getCandidate() === $this) {
-                $apply->setCandidate(null);
-            }
-        }
+    // public function removeApply(Apply $apply): self
+    // {
+    //     if ($this->applies->removeElement($apply)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($apply->getCandidate() === $this) {
+    //             $apply->setCandidate(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
  
 
     public function __toString()

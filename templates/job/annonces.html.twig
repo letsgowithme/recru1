@@ -27,6 +27,9 @@
 		{% endif %}
 
 		<div class="d-flex flex-wrap mt-4">
+		{% if app.user.roles is same as 'ROLE_RECRUITER' %}
+			
+
 			{% if app.user.jobs and app.user.isVerified is same as true %}
 				{% for job in jobs %}
 					<div class="card border-primary mb-3 me-3 bg-light" style="width: 20rem;">
@@ -44,6 +47,7 @@
 					</div>
 				{% endfor %}
 			{% endif %}
+					{% endif %}
 		<br>
 				{% for job in jobs %}
 				    {% if job.isApproved is same as false %}

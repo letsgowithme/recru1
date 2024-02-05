@@ -68,22 +68,22 @@ class UserCrudController extends AbstractCrudController
         ->setRequired($pageName === Crud::PAGE_NEW)
         ->onlyOnForms()
         ->setLabel('Mot de passe'),
-  
-    AssociationField::new('jobs')
-    ->setLabel('Offres d\'emploi'),
     TextField::new('company')
-    ->setLabel('Company'),
+        ->setLabel('Company'),
     TextField::new('location')
         ->setLabel('Adresse')
         ->hideOnIndex(),
     ArrayField::new('roles')
-            ->setLabel('Rôle'),
-        
+            ->setLabel('Rôle'),   
     DateTimeField::new('createdAt')
-    ->hideOnForm()
-    ->setFormTypeOption('disabled', 'disabled'),
+            ->hideOnForm()
+            ->setFormTypeOption('disabled', 'disabled'),
     BooleanField::new('isVerified')
-                ->setLabel('Approuvé ?')
+             ->setLabel('Approuvé ?'),
+    AssociationField::new('recruiter')
+             ->setLabel('Recruteur'),
+    AssociationField::new('candidate')
+             ->setLabel('Candidat')
     ];
     }
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void

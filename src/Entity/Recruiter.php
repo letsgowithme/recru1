@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use App\Repository\RecruiterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Collection;
 
 #[ORM\Entity(repositoryClass: RecruiterRepository::class)]
 class Recruiter
@@ -16,18 +15,20 @@ class Recruiter
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $company = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $location = null;
 
     #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'recruiter', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+  
+     #[ORM\OneToMany(mappedBy: 'recruiter', targetEntity: Job::class)]
+    private Collection $jobs;
 
-
-   
+      public function __construct()
+    {
+      $this->jobs = new ArrayCollection();
+       
+       
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -52,47 +53,24 @@ class Recruiter
 
         return $this;
     }
-  
-    
-
-  
+   
 
     /**
-     * Get the value of company
+     * Get the value of jobs
      */ 
-    public function getCompany()
+    public function getJobs()
     {
-        return $this->company;
+        return $this->jobs;
     }
 
     /**
-     * Set the value of company
+     * Set the value of jobs
      *
      * @return  self
      */ 
-    public function setCompany($company)
+    public function setJobs($jobs)
     {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of location
-     */ 
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * Set the value of location
-     *
-     * @return  self
-     */ 
-    public function setLocation($location)
-    {
-        $this->location = $location;
+        $this->jobs = $jobs;
 
         return $this;
     }

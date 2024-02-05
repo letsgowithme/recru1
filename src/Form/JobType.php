@@ -3,15 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Job;
+use App\Entity\Recruiter;
+use App\Repository\RecruiterRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 class JobType extends AbstractType
 {
@@ -127,6 +131,7 @@ class JobType extends AbstractType
                     new Assert\NotNull()
                 ]
             ])
+         
             
            
             ->add('submit', SubmitType::class, [

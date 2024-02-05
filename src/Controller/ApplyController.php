@@ -29,7 +29,7 @@ class ApplyController extends AbstractController
     ): Response
     {
               $applies = $applyRepository->findAll();
-            //   $applies = $applyRepository->findBy(['isApproved' => true]);
+            
               $appliesAuthor = "";
               
               $emailSender = "admin@exemple.com";
