@@ -35,7 +35,7 @@ class Apply
   
     #[ORM\ManyToOne(inversedBy: 'applies')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
-    private ?Candidate $candidate = null;
+    private ?User $candidate = null;
 
     #[ORM\ManyToOne(inversedBy: 'applies')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -46,8 +46,6 @@ class Apply
         $this->createdAt = new \DateTimeImmutable();
        
     }
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -72,8 +70,6 @@ class Apply
 
         return $this;
     }
-
-
 
     /**
      * Get the value of isApproved

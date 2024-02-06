@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\CandidateType;
-use App\Form\RecruiterType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,9 +54,9 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_CANDIDATE')]
-    #[Route('/{id}/cand_edit', name: 'user.candidate_edit', methods: ['GET', 'POST'])]
-    public function cand_edit(
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}/edit', name: 'user.edit', methods: ['GET', 'POST'])]
+    public function edit(
         Request $request, 
         EntityManagerInterface $manager,
         User $user, 
@@ -66,13 +64,13 @@ class UserController extends AbstractController
         SluggerInterface $slugger
         ): Response
     {
-        $cand_form = $this->createForm(CandidateType::class, $user);
-        $cand_form->handleRequest($request);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-        if ($cand_form->isSubmitted() && $cand_form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
             /** @var UploadedFile $cvFile */
-            $cvFile = $cand_form->get('cvFilename')->getData();
+            $cvFile = $form->get('cvFilename')->getData();
 
             if ($cvFile) {
                 $originalFilename = pathinfo($cvFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -104,42 +102,13 @@ class UserController extends AbstractController
             return $this->redirectToRoute('job.index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user/candidate_edit.html.twig', [
+        return $this->render('user/edit.html.twig', [
             'user' => $user,
-            'cand_form' => $cand_form,
+            'form' => $form,
         ]);
     }
 
-    #[IsGranted('ROLE_RECRUITER')]
-    #[Route('/{id}/recr_edit', name: 'user.recruiter_edit', methods: ['GET', 'POST'])]
-    public function recr_edit(
-        Request $request, 
-        EntityManagerInterface $manager,
-        User $user, 
-        UserRepository $userRepository): Response
-    {
-        $recr_form = $this->createForm(RecruiterType::class, $user);
-        $recr_form->handleRequest($request);
-
-        if ($recr_form->isSubmitted() && $recr_form->isValid()) {
-            $userRepository->save($user, true);
-
-            $manager->persist($user);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre profile a été modifié avec succès !'
-            );
-            return $this->redirectToRoute('job.index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('user/recruiter_edit.html.twig', [
-            'user' => $user,
-            'recr_form' => $recr_form,
-        ]);
-    }
-
+   
     #[Route('/delete/{id}', 'user.delete', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function delete(

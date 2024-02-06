@@ -2,29 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\Apply;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ApplyRepository;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Mime\Part\DataPart;
-use Symfony\Component\Mime\Part\File;
-
 
 class ApplyController extends AbstractController
 {
     #[Route('/apply', name: 'apply.index', methods: ['GET'])]
     #[IsGranted('ROLE_RECRUITER')]
     public function index(ApplyRepository $applyRepository,
-    Request $request,
-    EntityManagerInterface $manager,
     MailerInterface $mailer
     ): Response
     {
@@ -42,7 +32,6 @@ class ApplyController extends AbstractController
 
                    $applyCandidateLastname = $apply->getCandidate()->getLastname();
                    $applyCandidateFirstname = $apply->getCandidate()->getFirstname();
-                   $applyCandidateEmail = $apply->getCandidate()->getEmail();
                    $applyCandidateCv = $apply->getCandidate()->getCvFilename();
                  //Email
                  if($apply->getIsApproved() == true){
@@ -67,7 +56,6 @@ class ApplyController extends AbstractController
                
         return $this->render('apply/index.html.twig', [
             'applies' => $applies,
-            // 'allApplies' => $allApplies,
              'appliesAuthor' => $appliesAuthor
         ]);          
         

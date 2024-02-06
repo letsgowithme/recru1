@@ -34,11 +34,9 @@ class ApplyCrudController extends AbstractCrudController
            
            
             AssociationField::new('job')
-            ->setLabel('Offre'),
+                 ->setLabel('Offre'),
             AssociationField::new('candidate')
-                ->setLabel('Candidat'), 
-            // AssociationField::new('notifications')
-            //     ->setLabel('Notification'), 
+                ->setLabel('Candidat'),  
             BooleanField::new('isApproved')
                 ->setLabel('Approuvé ?')
           

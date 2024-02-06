@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -52,14 +54,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isVerified = false;
 
-   
-
-    #[ORM\OneToOne(targetEntity: Candidate::class, mappedBy: 'user', cascade: ['persist','remove'])]
-    private ?Candidate $candidate = null;
-
-    #[ORM\OneToOne(targetEntity: Recruiter::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Recruiter $recruiter = null;
-
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $company = null;
 
@@ -68,7 +62,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $resetToken = null;
-    
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Apply::class)]
+    private Collection $applies;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Job::class)]
+    private Collection $jobs;
+
+    public function __construct()
+    {
+        $this->applies = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
+       
+    }
        public function getId(): ?int
     {
         return $this->id;
@@ -125,7 +131,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     /**
      * A visual identifier that represents this user.
@@ -200,8 +205,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-
-
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -213,43 +216,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-   
-    public function getCandidate(): ?Candidate
-    {
-        return $this->candidate;
-    }
-
-    public function setCandidate(Candidate $candidate): self
-    {
-        // set the owning side of the relation if necessary
-        if ($candidate->getUser() !== $this) {
-            $candidate->setUser($this);
-        }
-
-        $this->candidate = $candidate;
-
-        return $this;
-    }
-
-    public function getRecruiter(): ?Recruiter
-    {
-        return $this->recruiter;
-    }
-
-    public function setRecruiter(Recruiter $recruiter): self
-    {
-        // set the owning side of the relation if necessary
-        if ($recruiter->getUser() !== $this) {
-            $recruiter->setUser($this);
-        }
-
-        $this->recruiter = $recruiter;
-
-        return $this;
-    }
-
-
-    
+       
 /**
      * Get the value of cvFilename
      */
@@ -281,36 +248,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // /**
-    //  * @return Collection<int, Apply>
-    //  */
-    // public function getApplies(): Collection
-    // {
-    //     return $this->applies;
-    // }
+    /**
+     * @return Collection<int, Apply>
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
 
-    // public function addApply(Apply $apply): self
-    // {
-    //     if (!$this->applies->contains($apply)) {
-    //         $this->applies->add($apply);
-    //         $apply->setCandidate($this);
-    //     }
+    public function addApply(Apply $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies->add($apply);
+            $apply->setCandidate($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removeApply(Apply $apply): self
-    // {
-    //     if ($this->applies->removeElement($apply)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($apply->getCandidate() === $this) {
-    //             $apply->setCandidate(null);
-    //         }
-    //     }
+    public function removeApply(Apply $apply): self
+    {
+        if ($this->applies->removeElement($apply)) {
+            // set the owning side to null (unless already changed)
+            if ($apply->getJob() === $this) {
+                $apply->setJob(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
  
+    /**
+     * Get the value of jobs
+     */ 
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
+
+    /**
+     * Set the value of jobs
+     *
+     * @return  self
+     */ 
+    public function setJobs($jobs)
+    {
+        $this->jobs = $jobs;
+
+        return $this;
+    }
 
     public function __toString()
     {

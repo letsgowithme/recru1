@@ -195,9 +195,6 @@ class Job
 
         return $this;
     }
-    
-    
-
 
     /**
      * Get the value of city

@@ -57,11 +57,10 @@ class JobCrudController extends AbstractCrudController
                 ->hideOnIndex(),
             AssociationField::new('applies')
                 ->setLabel('Postulés'),
-                AssociationField::new('author')
+            AssociationField::new('author')
                 ->setLabel('Auteur'),
             BooleanField::new('isApproved')
-                ->setLabel('Approuvé ?'),
-           
+                ->setLabel('Approuvé ?')
         ];
     }
 }

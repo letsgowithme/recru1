@@ -5,8 +5,6 @@ namespace App\Form;
 use App\Entity\Company;
 use App\Entity\User;
 
-use App\Repository\CompanyRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -49,7 +47,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'minLength' => '2',
+                    'minLength' => '7',
                     'maxLength' => '180'
                 ],
                 'label' => 'Email',
@@ -58,7 +56,7 @@ class UserType extends AbstractType
                     
                 ],
                 'constraints' => [
-                    // new Assert\Length(['min' => 2, 'max' => 180]),
+                    new Assert\Length(['min' => 7, 'max' => 180]),
                     new Assert\Email(),
                     new Assert\NotBlank()
                 ]
@@ -113,23 +111,35 @@ class UserType extends AbstractType
                 ]
             ])
 
-            ->add('company', TextareaType::class, [
+            ->add('company', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Companie',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label mt-4 text-dark fs-5',
+                    'minLength' => '2',
+                    'maxLength' => '255'
+                ],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 255]),
+                    
                 ]
             ])
             
-            ->add('location', TextareaType::class, [
+            ->add('location', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ],
                 'label' => 'Adresse',
                 'label_attr' => [
-                    'class' => 'form-label  mt-4'
+                    'class' => 'form-label mt-4 text-dark fs-5',
+                    'minLength' => '2',
+                    'maxLength' => '255'
+                ],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 255]),
+                   
                 ]
             ])
 
@@ -152,7 +162,7 @@ class UserType extends AbstractType
                  'label' => 'Enregistrer'
         ])
             ;
-        ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

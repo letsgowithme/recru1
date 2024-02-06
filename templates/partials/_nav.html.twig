@@ -57,13 +57,11 @@
 							<div class="dropdown-divider"></div>
 						{% endif %}
 						{% if app.user and app.user.isverified is same as true %}
-							{% if is_granted('ROLE_CANDIDATE') %}
+							{% if is_granted('ROLE_USER') %}
 
-								<a class="dropdown-item fw-bold" href="{{ path('user.candidate_edit', {id : app.user.id}) }}">Modifier le profil</a>
+								<a class="dropdown-item fw-bold" href="{{ path('user.edit', {id : app.user.id}) }}">Modifier le profil</a>
 								<div class="dropdown-divider"></div>
-							{% else %}
-								<a class="dropdown-item fw-bold" href="{{ path('user.recruiter_edit', {id : app.user.id}) }}">Modifier le profil</a>
-								<div class="dropdown-divider"></div>
+
 							{% endif %}
 
 						{% endif %}
